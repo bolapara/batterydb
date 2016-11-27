@@ -32,6 +32,10 @@ class Battery(object):
         except IndexError:
             return None
 
+    def add_entry(self, entry):
+        assert isinstance(entry, Entry)
+        self.entries.append(entry)
+
     def last_known_values(self):
         # TODO: don't know if this is needed; may already be tracked 
         # due to how entries are created
@@ -225,12 +229,12 @@ class Bdb(object):
             location=None,
             notes=None,
             sn=None):
-        entries = []
-        if any([v, mah, status, location, notes]):
-            entry = Entry(v, mah, status, location, notes)
-            entries.append(entry)
         sn = sn or self._index + 1
-        battery = Battery(sn, manu, pn, entries)
+        battery = Battery(sn, manu, pn)
+        if any([v, mah, status, location, notes]):
+            battery.add_entry(
+                Entry(v, mah, status, location, notes)
+            )
         self._put(battery)
         print battery
     
@@ -241,7 +245,8 @@ class Bdb(object):
             v=None,
             mah=None,
             status=None,
-            location=None):
+            location=None,
+            count=0):
         if not v:
             v = []
         if not mah:
@@ -250,7 +255,13 @@ class Bdb(object):
             status = []
         if not location:
             location = []
-        for entry_params in izip_longest(v, mah, status, location, fillvalue=None):
+        for entry_params in izip_longest(
+                v,
+                mah,
+                status,
+                location,
+                range(count),
+                fillvalue=None):
             self.add(
                 manu,
                 pn,
@@ -261,12 +272,18 @@ class Bdb(object):
             )
 
     def log(self, sn, v=None, mah=None, status=None, location=None, notes=None):
-        if not any([status, location, v, mah]):
+        if not any([v, mah, status, location, notes]):
             raise RuntimeError('Nothing to log')
         battery = self._get(sn)
-        last_entry = battery.last_entry
-        entry = Entry.from_previous(last_entry, v, mah, status, location, notes)
-        battery.entries.append(entry)
+        entry = Entry.from_previous(
+            battery.last_entry,
+            v,
+            mah,
+            status,
+            location,
+            notes
+        )
+        battery.add_entry(entry)
         self._put(battery, overwrite=True)
         print battery
 
@@ -282,10 +299,9 @@ class Bdb(object):
 
     def edit(self, sn, manu=None, pn=None):
         battery = self._get(sn)
-        new_manu = manu or battery.manu
-        new_pn = pn or battery.pn
-        new_battery = Battery(battery.sn, new_manu, new_pn, battery.entries)
-        self._put(new_battery, overwrite=True)
+        battery.manu = manu or battery.manu
+        battery.pn = pn or battery.pn
+        self._put(battery, overwrite=True)
 
     def delete(self, sn):
         del self._db[str(sn)]
