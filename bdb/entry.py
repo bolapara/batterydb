@@ -70,8 +70,8 @@ class Entry(object):
                 'status': self.status,
                 'location': self.location,
                 'notes': self.notes,
-                }
             }
+        }
         return d
 
     @classmethod

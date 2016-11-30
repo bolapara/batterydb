@@ -1,6 +1,7 @@
 
 from entry import Entry
 
+
 class Battery(object):
 
     def __init__(self, sn, manu=None, pn=None, entries=None):
@@ -74,13 +75,13 @@ class Battery(object):
 
     def to_dict(self):
         d = {
-            'battery' : {
+            'battery': {
                 'sn': self.sn,
                 'manu': self.manu,
                 'pn': self.pn,
                 'entries': [entry.to_dict() for entry in self.entries],
-                }
             }
+        }
         return d
 
     @classmethod
