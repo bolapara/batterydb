@@ -10,7 +10,7 @@ Add a cell to the database with an optional manufacturer and model number and yo
 
 Currently, bdb has no real interface.  Here is an example of how to use it.
 
-    localhost:batterydb josh$ python -i bdb.py
+    $ python -i bdb.py
     >>> inv()
     Battery(sn=2, manu=samsung, pn=26c, last_entry=Entry(ts=161201-093322, v=4.15, mah=2200))
     Battery(sn=1, manu=sony, pn=18650se)
