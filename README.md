@@ -10,7 +10,7 @@ Add a cell to the database with an optional manufacturer and model number and yo
 
 Currently, bdb has no real interface.  Here is an example of how to use it.
 
-    localhost:batterydb jmp$ python -i bdb.py
+    localhost:batterydb josh$ python -i bdb.py
     >>> inv()
     Battery(sn=2, manu=samsung, pn=26c, last_entry=Entry(ts=161201-093322, v=4.15, mah=2200))
     Battery(sn=1, manu=sony, pn=18650se)
@@ -47,10 +47,17 @@ Eventually I want to be able to run queries to pull specific cells based on attr
 ## Fields
 
 manu = text field to identify manufacturer
+
 pn = text field to identify cell part number
+
 sn = integer field for cell serial number
+
 v = float field for voltage
+ 
 mah = integer field to track mAh
+ 
 status = text field for general use; I'm going to use it to track whether a cell is: storage, inuse, disposed, etc.
+
 location = text field for general use; I'm going to use it to tracj whether a cell is in storage or in a specific pack.
+
 notes = text field for general use
