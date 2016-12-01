@@ -11,10 +11,10 @@ class Entry(object):
             location=None,
             notes=None,
             ts=None):
-        assert isinstance(ts, (float, None.__class__))
         assert isinstance(v, (int, float, None.__class__))
         assert isinstance(mah, (int, None.__class__))
         assert isinstance(notes, (str, None.__class__))
+        assert isinstance(ts, (float, None.__class__))
         if not any([v, mah, status, location, notes]):
             raise RuntimeError('Null entry')
         self.ts = ts or time.time()

@@ -62,7 +62,7 @@ class Battery(object):
             location=None,
             notes=None,
             ts=None):
-        self.add_entry(
+        self.entries.append(
             Entry.from_previous(
                 self.last_entry,
                 v,
