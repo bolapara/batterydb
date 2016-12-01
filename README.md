@@ -20,8 +20,6 @@ Currently, bdb has no real interface.  Here is an example of how to use it.
     Entry(ts=161201-093322, v=4.15, mah=2200)
     Entry(ts=161201-093427, v=4.15, mah=2150)
     Battery(sn=2, manu=samsung, pn=26c, last_entry=Entry(ts=161201-093427, v=4.15, mah=2150))
-    >>> 
-    jmp-mbp:batterydb jmp$ python -i bdb.py
     >>> add('samsung','28e')
     Battery(sn=3, manu=samsung, pn=28e)
     >>> log(3,v=3.86)
