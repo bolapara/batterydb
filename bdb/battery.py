@@ -73,6 +73,9 @@ class Battery(object):
             )
         )
 
+    def del_last_entry(self):
+        self.entries = self.entries[:-1]
+
     def to_dict(self):
         d = {
             'battery': {
