@@ -144,9 +144,21 @@ class Bdb(object):
         count_avg = 0
         for battery in self._get_all_batteries():
             count += 1
-            if battery.last_entry:
-                if battery.last_entry.mah:
-                    total_mah += battery.last_entry.mah
-                    count_avg += 1
+            if battery.mah:
+                total_mah += battery.mah
+                count_avg += 1
         print "Count: %d  Total Ah: %.2f  Avg mAh: %d" % (
             count, total_mah / 1000.0, total_mah / count_avg)
+
+    def dist(self):
+        distdict = {}
+        for battery in self._get_all_batteries():
+            mah = battery.mah
+            if mah:
+                ah = round(mah / 1000.0, 1)
+                cur = distdict.get(ah, 0)
+                cur += ah
+                distdict[ah] = round(cur, 1)
+        for key in sorted(distdict.keys()):
+            val = distdict[key]
+            print '%.1f: %4d (%.1f)' % (key, int(val/key), val)
