@@ -134,6 +134,12 @@ class Bdb(object):
     def delete(self, sn):
         del self._db[str(sn)]
 
+    def delete_last_entry(self, sn):
+        battery = self._get(sn)
+        battery.del_last_entry()
+        self._put(battery, overwrite=True)
+        print battery
+
     def inv(self):
         for battery in self._get_all_batteries():
             print battery
