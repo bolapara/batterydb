@@ -115,6 +115,12 @@ class Bdb(object):
         self._put(battery, overwrite=True)
         print battery
 
+    def lm(self, sn, mah):
+        self.log(sn, mah=mah)
+
+    def ln(self, sn, notes):
+        self.log(sn, notes=notes)
+
     def info(self, sn):
         battery = self._get(sn)
         print battery
