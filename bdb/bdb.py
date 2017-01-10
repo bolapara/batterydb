@@ -172,5 +172,6 @@ class Bdb(object):
                 cur += ah
                 distdict[ah] = round(cur, 1)
         for key in sorted(distdict.keys()):
-            val = distdict[key]
-            print '%.1f: %4d (%.1f)' % (key, int(val/key), val)
+            if key:
+                val = distdict[key]
+                print '%.1f: %4d (%.1f)' % (key, int(val/key), val)
